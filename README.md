@@ -16,3 +16,8 @@ Make sure that path in settings is the correct path. If not, select it manually.
 # Screenshots
 
 ![](media/screenshot1.png)
+
+# ToDos
+
+* Settings auto-save
+* Song pitcher
