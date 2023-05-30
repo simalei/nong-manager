@@ -208,7 +208,7 @@ impl eframe::App for MyApp {
                     ui.strong("by Alexander Simonov");
                 });
 
-                ui.label("Version: 1.0");
+                ui.label("Version: 1.0.1");
 
                 ui.horizontal(|ui| {
                     ui.label("Powered by");
