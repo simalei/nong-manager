@@ -21,3 +21,4 @@ Make sure that path in settings is the correct path. If not, select it manually.
 
 * Settings auto-save
 * Song pitcher
+* Rewrite as integrated
