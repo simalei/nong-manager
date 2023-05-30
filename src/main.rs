@@ -1,3 +1,4 @@
+#![feature(panic_info_message)]
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")] use std::{fs::File, io};
 
 // hide console window on Windows in release
@@ -23,7 +24,39 @@ enum Status {
     ResultsFound
 }
 
+fn setup_panic_hook() {
+    std::panic::set_hook(Box::new(|panic_info| {
+        let err = panic_info.payload().downcast_ref::<&str>();
+        let location = panic_info.location();
+
+        let mut error = "Unknown";
+        let mut file = "Unknown";
+        let mut line: String = "Unknown".to_string();
+        let mut column: String = "Unknown".to_string();
+
+        if err.is_some() {
+            error = err.unwrap();
+        }
+
+        if location.is_some() {
+            file = location.unwrap().file();
+            line = location.unwrap().line().to_string();
+            column = location.unwrap().column().to_string();
+        }
+
+        let error_message = format!
+        ("Error: {}.\nMessage: {:?}.\nLocation: {}.\nLine: {}.\nColumn: {}.", 
+        error,
+        panic_info.message(),
+        file, 
+        line, 
+        column);
+        msgbox::create("Error has occured", &error_message, msgbox::IconType::Error).unwrap();
+    }));
+}
+
 fn main() {
+    setup_panic_hook();
     let options = eframe::NativeOptions {
         initial_window_size: Some(egui::vec2(660.0, 280.0)),
         
